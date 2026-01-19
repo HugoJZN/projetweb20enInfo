@@ -1,75 +1,136 @@
-Project Name
-This project is a web application designed to help EFREI students improve and achieve better grades in computer science. It is aimed at first-year (L1) students and provides access to past continuous assessments (CCs) that usually take place every few weeks.
+## EFREI Computer Science Assistant
 
-Table of Contents
-Project Context
-Database Setup
-User Roles
-Running the Application
-Application Features
-Launch backEnd and FrontEnd
+### Project Overview
 
-Project Context
-The application displays the different computer science subjects on the home page. Subjects include:
-Python
-Data Structures
-Java
-C
+This project is a **web-based educational application** designed to help **EFREI students** improve their performance in computer science. It primarily targets **first-year students (L1)** and provides access to **previous continuous assessments (CAs)**, which usually take place every few weeks during the academic year.
 
-Clicking on a subject loads a new page where students can access multiple continuous assessments (CCs) for that subject. Initially, there will be three or more CCs per subject, with more added later. This allows students to practice and prepare effectively for their exams.
+---
 
-Database Setup
-Open a MySQL database.
-Adjust the environment variables to match your database settings (host, port, user, password).
-Create the database and insert the values from SQL_QUERY_DB.
+## Table of Contents
 
-Note: passwords are already encrypted in the database. The real password for all users is: bbbb2005.
-The database has two tables:
-users
-id (Primary Key)
-firstName
-lastName
-email
-password
-occupation (defines access to modules)
+* Project Context and Objectives
+* Database Setup
+* User Roles and Permissions
+* Application Features
+* Backend and Frontend Startup
+* Additional Information
 
-subjects
-id (Primary Key)
-name
-active (0 = inactive, 1 = active)
+---
 
-User Roles
-There are three types of users:
-efrei student: Access to all modules + continuous assessments
-student: Access to only the Python module
-admin: Access to all modules + can activate/deactivate modules for all users
+## Project Context
 
-users:
+The application homepage displays the available computer science subjects, including:
 
-admin:           --> mail: bot@ai.com, password: bbbb2005
-efrei student:   --> mail: enzo@mail.com, password: bbbb2005
-student:         --> mail: sajin@mail.com, password: bbbb2005
+* Python
+* Data Structures
+* Java
+* C
 
-Launch BackEnd et FrontEnd
-Then, to launch the backend and frontend:
-Go to the server and run :npm run dev, and in another terminal in the client, run: npm run serve.
+By selecting a subject, students are redirected to a dedicated page where they can access multiple **continuous assessments (CAs)** related to that subject.
 
-After you do this, launch the http://localhost:8080/  (Local Web page) , you will arrive at the home page “Accueil” (Home). You will then need to log in or create an account to access the modules/continuous assessments of the application.
+* Each subject initially includes **at least three assessments**
+* Additional assessments can be added over time
+* Assessments are presented as **multiple-choice quizzes**
+* Answers are revealed at the end using the **“Check Answer”** feature
 
-There is also an About page, which gives a bit of explanation about the app.
+This system allows students to practice regularly and prepare effectively for exams.
 
-After logging in, you are on the homeLogin page, where the different modules are displayed. You can go inside to see the different continuous assessments, which are multiple-choice quizzes, with the answers shown at the end using a “Check Answer” feature.
+---
 
-Once logged in, it is also possible to change your profile, including your first name, last name, occupation and password.
+## Database Configuration
 
-Important information: We worked on macOS, so some files and directories in the node_modules folder were installed specifically for Mac. Therefore, you need to delete them and then run `npm install` again in the project root directory and in the server folder.
+* Create a **MySQL** database
+* Configure the environment variables according to your database setup:
 
-In the project root directory:
+  * host
+  * port
+  * user
+  * password
+* Create the database and import the data using the **SQL_QUERY_DB** script
 
-`rm -rf node_modules package-lock.json`
-`npm install`
+### Password Information
 
-In the server folder:
+All passwords stored in the database are **encrypted**.
+The actual password for all test accounts is:
 
-`rm -rf node_modules package-lock.json`
-`npm install`
+**bbbb2005**
+
+---
+
+## Database Structure
+
+The database contains two main tables:
+
+### `users`
+
+* `id` (primary key)
+* `firstName`
+* `lastName`
+* `email`
+* `password`
+* `occupation` (defines access to modules)
+
+### `subjects`
+
+* `id` (primary key)
+* `name`
+* `active` (0 = inactive, 1 = active)
+
+---
+
+## User Roles
+
+The application defines three user roles:
+
+### EFREI Student
+
+* Full access to all modules
+* Access to all continuous assessments
+
+### Student
+
+* Access limited to the **Python** module only
+
+### Administrator
+
+* Full access to all modules
+* Ability to enable or disable modules for all users
+
+---
+
+## Test Accounts
+
+| Role          | Email                           | Password |
+| ------------- | ------------------------------- | -------- |
+| Administrator | [bot@ai.com](mailto:bot@ai.com) | bbbb2005 |
+| EFREI Student | ***@mail.com                    | bbbb2005 |
+| Student       | ***@mail.com                    | bbbb2005 |
+
+---
+
+## Application Features
+
+* User authentication (sign-up and login)
+* Role-based access control
+* Interactive multiple-choice quizzes
+* Answer validation via the **“Check Answer”** button
+* User profile management:
+
+  * First name
+  * Last name
+  * Occupation
+  * Password
+* **About** page explaining the purpose and scope of the project
+
+---
+
+## Backend and Frontend Launch
+
+To start the application:
+
+1. Navigate to the **server** directory
+2. Run the following command:
+
+```bash
+npm run dev
+```
