@@ -2,7 +2,7 @@
 
 ### Project Overview
 
-This project is a **web-based educational application** designed to help **EFREI students** improve their performance in computer science. It primarily targets **first-year students (L1)** and provides access to **previous continuous assessments (CAs)**, which usually take place every few weeks during the academic year.
+This project is a **web-based educational application** designed to help **EFREI students** improve their performance in computer science. 
 
 ---
 
