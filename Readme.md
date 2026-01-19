@@ -1,136 +1,91 @@
-## EFREI Computer Science Assistant
+## Project Summary – Rainfall Prediction (RainTomorrow)
 
-### Project Overview
+### Project Objective
 
-This project is a **web-based educational application** designed to help **EFREI students** improve their performance in computer science. 
-
----
-
-## Table of Contents
-
-* Project Context and Objectives
-* Database Setup
-* User Roles and Permissions
-* Application Features
-* Backend and Frontend Startup
-* Additional Information
+The goal of this project is to **predict whether rainfall will occur the following day** (`RainTomorrow`) using historical meteorological data. Several **machine learning models** are evaluated, with particular emphasis on assessing the impact of **dimensionality reduction using Principal Component Analysis (PCA)** on model performance.
 
 ---
 
-## Project Context
+### Dataset Description
 
-The application homepage displays the available computer science subjects, including:
+* **Dataset**: `Data_Weather.csv`
+* **Size**: 145,460 observations with 22 explanatory variables
+* **Target variable**: `RainTomorrow` (Yes / No)
+* **Class imbalance**:
 
-* Python
-* Data Structures
-* Java
-* C
-
-By selecting a subject, students are redirected to a dedicated page where they can access multiple **continuous assessments (CAs)** related to that subject.
-
-* Each subject initially includes **at least three assessments**
-* Additional assessments can be added over time
-* Assessments are presented as **multiple-choice quizzes**
-* Answers are revealed at the end using the **“Check Answer”** feature
-
-This system allows students to practice regularly and prepare effectively for exams.
+  * No: ~78%
+  * Yes: ~22%
 
 ---
 
-## Database Configuration
+### Exploratory Data Analysis (EDA)
 
-* Create a **MySQL** database
-* Configure the environment variables according to your database setup:
-
-  * host
-  * port
-  * user
-  * password
-* Create the database and import the data using the **SQL_QUERY_DB** script
-
-### Password Information
-
-All passwords stored in the database are **encrypted**.
-The actual password for all test accounts is:
-
-**bbbb2005**
+* No missing values detected after inspection
+* Analysis of variable distributions and inter-feature correlations
+* Clear visualization of the target class imbalance
 
 ---
 
-## Database Structure
+### Data Preprocessing
 
-The database contains two main tables:
+* Removal of non-informative features (`Date`, `Location`)
+* Binary encoding of the target variable (Yes = 1, No = 0)
+* Split into **training and test sets (80% / 20%)** with stratification
+* Construction of a preprocessing pipeline applied exclusively to the training set, including:
 
-### `users`
-
-* `id` (primary key)
-* `firstName`
-* `lastName`
-* `email`
-* `password`
-* `occupation` (defines access to modules)
-
-### `subjects`
-
-* `id` (primary key)
-* `name`
-* `active` (0 = inactive, 1 = active)
+  * Missing value imputation
+  * Outlier detection and treatment using the IQR method
+  * One-hot encoding of categorical variables
+  * Feature scaling of numerical variables
+  * Removal of highly correlated features
+  * Class rebalancing using **SMOTE**
 
 ---
 
-## User Roles
+### Dimensionality Reduction with PCA
 
-The application defines three user roles:
-
-### EFREI Student
-
-* Full access to all modules
-* Access to all continuous assessments
-
-### Student
-
-* Access limited to the **Python** module only
-
-### Administrator
-
-* Full access to all modules
-* Ability to enable or disable modules for all users
+* Number of features before PCA: **60**
+* Retained variance: **75%**
+* Number of principal components selected: **31**
+* Dimensionality reduction: **–48%**
 
 ---
 
-## Test Accounts
+### Models Evaluated
 
-| Role          | Email                           | Password |
-| ------------- | ------------------------------- | -------- |
-| Administrator | [bot@ai.com](mailto:bot@ai.com) | bbbb2005 |
-| EFREI Student | ***@mail.com                    | bbbb2005 |
-| Student       | ***@mail.com                    | bbbb2005 |
+1. **Logistic Regression**
+2. **KNN without dimensionality reduction**
+3. **KNN with PCA**
 
----
-
-## Application Features
-
-* User authentication (sign-up and login)
-* Role-based access control
-* Interactive multiple-choice quizzes
-* Answer validation via the **“Check Answer”** button
-* User profile management:
-
-  * First name
-  * Last name
-  * Occupation
-  * Password
-* **About** page explaining the purpose and scope of the project
+KNN hyperparameters were optimized using **GridSearchCV**.
 
 ---
 
-## Backend and Frontend Launch
+### Performance Evaluation (Test Set)
 
-To start the application:
+**Logistic regression** achieved the best overall performance, particularly in terms of **ROC-AUC** and **F1-score**. In contrast, **KNN** proved highly sensitive to feature dimensionality, with a noticeable decline in performance after applying PCA.
 
-1. Navigate to the **server** directory
-2. Run the following command:
+---
 
-```bash
-npm run dev
-```
+### Model Interpretability
+
+Analysis of the logistic regression coefficients highlights that:
+
+* **Humidity at 3 PM (Humidity3pm)** is the most influential predictor
+* Wind speed and direction also play a significant role in rainfall prediction
+
+---
+
+### Detailed Analyses and Visualizations
+
+All **plots, in-depth comparisons, confusion matrices, ROC curves, cross-validation results, and complete performance metrics** for both **KNN** and **logistic regression** models are available in the full GitHub notebook.
+
+---
+
+### Conclusion
+
+* **Logistic regression** provides the best trade-off between predictive performance and interpretability
+* **PCA** effectively reduces dimensionality but slightly degrades KNN performance
+* **SMOTE-based class rebalancing** significantly improves the detection of rainy days
+
+**Final recommended model: Logistic Regression without PCA**
