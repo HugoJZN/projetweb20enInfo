@@ -1,4 +1,4 @@
-20 en Info
+## 20 en Info
 This project is a web application designed to help EFREI students improve and achieve better grades in computer science. It is aimed at first-year (L1) students and provides access to past continuous assessments (CCs) that usually take place every few weeks.
 
 Table of Contents
